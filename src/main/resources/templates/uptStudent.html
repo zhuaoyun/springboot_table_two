@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/uptStudent" method="post">
+    <input type="hidden" name="sId" th:value="${student.getsId()}">
+    学生姓名：<input type="text" name="sName" th:value="${student.getsName()}">
+    学生用户名：<input type="text" name="sUsername" th:value="${student.getsUsername()}">
+    学生密码：<input type="text" name="sPassword" th:value="${student.getsPassword()}">
+    学生性别：<input type="text" name="sSex" th:value="${student.getsSex()}">
+    学生住址：<input type="text" name="sAddress" th:value="${student.getsAddress()}">
+
+    学生生日：<input  type="date"  name="sBirth"  required th:value="${#dates.format(student.getsBirth(),'yyyy-MM-dd')}">
+    学生教师：<select name="tId"  >
+    <option
+            th:each="teacher:${teachers}"
+            th:selected="${teacher.gettId() == student.getTeacher().gettId()}"
+            th:value="${teacher.gettId()}" th:text="${teacher.gettName()}">
+
+    </option>
+    <!--<option  th:each="teacher:${teachers}"
+             th:text="${teacher.gettName()}"
+             th:value="${teacher.gettId()==student.getTeacher().gettId()}" >
+
+    </option>-->
+   <!-- <option th:each="teacher:${teachers}" th:if="${teacher.gettId()==student.getTeacher().gettId()}" th:text="${teacher.gettName()}" selected></option>-->
+
+
+</select>
+    <input type="submit" value="修改">
+</form>
+</body>
+</html>

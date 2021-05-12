@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zay.mapper.TeacherMapper" >
+
+    <select id="findById" resultMap="ZZZ">
+        select * from teacher where t_id=#{t_id}
+    </select>
+
+    <select id="selectAll" resultMap="ZZZ">
+        select * from teacher
+    </select>
+    <resultMap id="ZZZ" type="com.zay.po.Teacher">
+        <id column="t_id" property="tId"/>
+        <result column="t_name" property="tName"/>
+        <result column="t_subject" property="tSubject"/>
+        <result column="t_password" property="tPassword"/>
+        <result column="t_sex" property="tSex"/>
+        <result column="t_address" property="tAddress"/>
+        <result column="t_birth" property="tBirth"/>
+    </resultMap>
+</mapper>

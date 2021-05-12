@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+    <a href="/toAddStudent">添加</a>
+    <thead>
+    <th>学生编号</th>
+    <th>学生姓名</th>
+    <th>学生账号</th>
+    <th>学生性别</th>
+    <th>学生住址</th>
+    <th>学生生日</th>
+    <th>学生家教老师编号</th>
+    <th>学生家教老师姓名</th>
+    <th>学生家教老师性别</th>
+    <th>学生家教老师学科</th>
+    <th>学生家教老师住址</th>
+    <th>操作</th>
+    </thead>
+    <tbody>
+      <tr th:each="student:${list}">
+          <td th:text="${student.sId}"></td>
+          <td th:text="${student.sName}"></td>
+          <td th:text="${student.sUsername}"></td>
+          <td th:text="${student.sSex}"></td>
+          <td th:text="${student.sAddress}"></td>
+          <td th:text="${#dates.format(student.sBirth,'yyyy-MM-dd')}"></td>
+          <td th:text="${student.tId}"></td>
+          <td th:text="${student.teacher.gettName()}"></td>
+          <td th:text="${student.teacher.gettSex()}"></td>
+          <td th:text="${student.teacher.gettSubject()}"></td>
+          <td th:text="${student.teacher.gettAddress()}"></td>
+          <td>
+              <a th:href="@{/del/}+${student.sId}">删除</a>
+              <a th:href="@{/toUpt/}+${student.sId}">修改</a>
+          </td>
+      </tr>
+    </tbody>
+
+</table>
+<p>当前 <span th:text="${list.pageNum}"></span> 页,总 <span th:text="${list.pages}"></span> 页,共 <span th:text="${list.total}"></span> 条记录</p>
+<a th:href="@{/findAll}">首页</a>
+<a th:switch="${list.pageNum}">
+    <a th:case="1"><a href="javascript:;">上一页</a></a>
+    <a th:case="*"><a th:href="@{/findAll/(pageNum=${list.pageNum}-1)}">上一页</a></a>
+</a>
+<a th:switch="${list.pageNum}">
+    <a th:case="${list.pages}"><a href="javascript:;">下一页</a></a>
+    <a th:case="*"><a th:href="@{/findAll/(pageNum=${list.pageNum}+1)}">下一页</a></a>
+</a>
+<a th:href="@{/findAll(pageNum=${list.pages})}">尾页</a>
+
+
+</body>
+</html>

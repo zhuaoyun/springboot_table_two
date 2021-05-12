@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zay.mapper.StudentMapper" >
+
+  <select id="findAll" resultMap="StudentT">
+    select s.s_id,s.s_name,s.s_username,s.s_password,s.s_sex,s.s_address,s.s_birth,s.t_id,t.t_name,t.t_subject,t.t_sex,t.t_password,t.t_address,t.t_birth
+      from
+      student as  s,teacher as t
+      where s.t_id=t.t_id
+  </select>
+
+  <select id="findById" resultMap="StudentT">
+    select * from student where s_id=#{s_id};
+  </select>
+
+  <resultMap id="StudentT" type="com.zay.po.Student">
+    <id column="s_id" property="sId"/>
+    <result column="s_name" property="sName"/>
+    <result column="s_username" property="sUsername"/>
+    <result column="s_password" property="sPassword"/>
+    <result column="s_sex" property="sSex"/>
+    <result column="s_address" property="sAddress"/>
+    <result column="s_birth" property="sBirth"/>
+    <result column="t_id" property="tId"/>
+    <association property="teacher" javaType="com.zay.po.Teacher">
+      <id column="t_id" property="tId"/>
+      <result column="t_name" property="tName"/>
+      <result column="t_subject" property="tSubject"/>
+      <result column="t_password" property="tPassword"/>
+      <result column="t_address" property="tAddress"/>
+      <result column="t_sex" property="tSex"/>
+      <result column="t_birth" property="tBirth"/>
+    </association>
+  </resultMap>
+
+  <insert id="addStudent" parameterType="com.zay.po.Student">
+    insert into student(s_name, s_username, s_password, s_sex, s_address, s_birth, t_id)
+    value(#{sName},#{sUsername},#{sPassword},#{sSex},#{sAddress},#{sBirth},#{teacher.tId})
+  </insert>
+
+  <delete id="delStudent" parameterType="com.zay.po.Student">
+    delete from student where s_id=#{s_id}
+  </delete>
+
+  <update id="uptStudent" parameterType="com.zay.po.Student">
+    update student set s_name=#{sName},s_username=#{sUsername},s_password=#{sPassword},s_sex=#{sSex},s_address=#{sAddress},s_birth=#{sBirth},t_id=#{tId}
+    where s_id=#{sId}
+  </update>
+</mapper>
